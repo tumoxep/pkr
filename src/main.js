@@ -12,10 +12,10 @@ Vue.config.productionTip = false
 
 const router = new VueRouter({
   mode: 'history',
-  routes,
-  store
+  routes
 })
 
 new Vue({
-  router
+  router,
+  store
 }).$mount('#app')
