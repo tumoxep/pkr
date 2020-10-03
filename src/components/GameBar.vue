@@ -1,13 +1,13 @@
 <template>
   <div class="game-bar">
-    <TabbedView :tabs="gameBarTabs" :tabSetAction="'ui/gameBarSetTab'">
-      <template v-if="gameBarTab === 'main'">
+    <TabbedView :tabId="'gameBar'">
+      <template v-if="activeTab === 'main'">
         <p>main</p>
       </template>
-      <template v-else-if="gameBarTab === 'history'">
+      <template v-else-if="activeTab === 'history'">
         <p>history</p>
       </template>
-      <template v-else-if="gameBarTab === 'settings'">
+      <template v-else-if="activeTab === 'settings'">
         <p>settings</p>
       </template>
     </TabbedView>
@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import TabbedView from '../views/Tabbed'
 
 export default {
   name: 'GameBar',
   computed: {
-    ...mapState('ui', ['gameBarTabs', 'gameBarTab'])
+    ...mapGetters('ui', { activeTab: 'activeGameBarTab' })
   },
   components: {
     TabbedView

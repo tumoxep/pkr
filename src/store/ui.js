@@ -1,36 +1,47 @@
 const state = () => ({
-  gameBarTab: 'main',
-  gameBarTabs: [
-    { name: 'main', title: 'Game', active: true },
-    { name: 'history', title: 'History' },
-    { name: 'settings', title: 'Settings' }
-  ],
-  handBarTab: 'fold',
-  handBarTabs: [
-    { name: 'fold', title: 'Fold', active: true },
-    { name: 'check', title: 'Check' },
-    { name: 'call', title: 'Call' },
-    { name: 'raise', title: 'Raise' },
-  ]
+  tabs: {
+    gameBar: [
+      { name: 'main', title: 'Game', active: true },
+      { name: 'history', title: 'History' },
+      { name: 'settings', title: 'Settings' }      
+    ],
+    handBar: [
+      { name: 'fold', title: 'Fold', active: true },
+      { name: 'check', title: 'Check' },
+      { name: 'call', title: 'Call' },
+      { name: 'raise', title: 'Raise' },
+    ]
+  }
 })
 
 const actions = {
-  gameBarSetTab({ commit }, tab) {
-    commit('gameBarSetTab', tab)
-  },
-  handBarSetTab({ commit }, tab) {
-    commit('handBarSetTab', tab)
+  setTab({ commit }, { tab, tabId }) {
+    commit('setTab', { tab, tabId })
   }
 }
 
 const mutations = {
-  gameBarSetTab(state, tab) {
-    state.gameBarTab = tab.name
-    state.gameBarTabs = state.gameBarTabs.map(el => Object.assign({}, el, { active: tab.name === el.name }))
+  setTab(state, { tab, tabId }) {
+    state.tabs[tabId] = state.tabs[tabId].map(el => Object.assign({}, el, { active: tab.name === el.name }))
+  }
+}
+
+const getters = {
+  activeTabName(state) {
+    return tabId => {
+      return state.tabs[tabId].find(el => el.active).name
+    }
   },
-  handBarSetTab(state, tab) {
-    state.handBarTab = tab.name
-    state.handBarTabs = state.handBarTabs.map(el => Object.assign({}, el, { active: tab.name === el.name }))
+  activeGameBarTab(state, getters) {
+    return getters.activeTabName('gameBar')
+  },
+  activeHandBarTab(state, getters) {
+    return getters.activeTabName('handBar')
+  },
+  tabsById(state) {
+    return tabId => {
+      return state.tabs[tabId]
+    }
   }
 }
 
@@ -38,5 +49,6 @@ export default {
   namespaced: true,
   state,
   actions,
-  mutations
+  mutations,
+  getters
 }

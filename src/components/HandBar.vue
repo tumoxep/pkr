@@ -1,16 +1,16 @@
 <template>
   <div class="hand-bar">
-    <TabbedView :tabs="handBarTabs" :tabSetAction="'ui/handBarSetTab'">
-      <template v-if="handBarTab === 'fold'">
-        <p>main</p>
+    <TabbedView :tabId="'handBar'">
+      <template v-if="activeTab === 'fold'">
+        <p>fold</p>
       </template>
-      <template v-else-if="handBarTab === 'check'">
+      <template v-else-if="activeTab === 'check'">
         <p>check</p>
       </template>
-      <template v-else-if="handBarTab === 'call'">
+      <template v-else-if="activeTab === 'call'">
         <p>call</p>
       </template>
-      <template v-else-if="handBarTab === 'raise'">
+      <template v-else-if="activeTab === 'raise'">
         <p>raise</p>
       </template>
     </TabbedView>
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import TabbedView from '../views/Tabbed'
 
 export default {
   name: 'HandBar',
   computed: {
-    ...mapState('ui', ['handBarTabs', 'handBarTab'])
+    ...mapGetters('ui', { activeTab: 'activeHandBarTab' })
   },
   components: {
     TabbedView
