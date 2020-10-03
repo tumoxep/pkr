@@ -1,5 +1,5 @@
 <template>
-  <div id="root-view">
+  <div class="root-view">
     <GameBar />
     <CardTable :cards="cards" />
     <HandBar />
@@ -33,10 +33,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/variables';
 .hand-bar {
   position: absolute;
-  bottom: -170px;
-  left: 0;
+  margin-bottom: -170px;
+  @media (min-width: #{$breakpoint-mobile}) {
+    margin-bottom: 0;
+  }
+  bottom: 0;
+  right: 0;
   z-index: 5;
+}
+.card-table {
+  @media (min-width: #{$breakpoint-mobile}) {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
 }
 </style>

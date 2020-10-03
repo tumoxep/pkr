@@ -33,9 +33,10 @@ export default {
   computed: {
     cardStyle() {
       return (index) => {
+        const width = this.innerWidth > 767 ? this.innerWidth - 340 : this.innerWidth;
         return {
           'z-index': index,
-          'margin-right': `-${this.innerWidth > 750 ? 0 : (750 - this.innerWidth) / 4}px`
+          'margin-right': `-${width > 750 ? 0 : (750 - width) / 4}px`
         }
       }
     },
