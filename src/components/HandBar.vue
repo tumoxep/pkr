@@ -65,7 +65,7 @@ export default {
   border-radius: 22px;
   max-width: 340px;
   .tabbed-view {
-    min-height: 150px;
+    min-height: 140px;
   }
 }
 .card-table {
