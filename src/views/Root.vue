@@ -3,6 +3,7 @@
     <GameBar />
     <CardTable :cards="tableCards" />
     <HandBar :cards="handCards"/>
+    <ActionButton />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import GameBar from '../components/GameBar'
 import CardTable from '../components/CardTable'
 import HandBar from '../components/HandBar'
+import ActionButton from '../components/ActionButton'
 import { mapActions } from 'vuex'
 
 export default {
@@ -46,7 +48,8 @@ export default {
   components: {
     GameBar,
     CardTable,
-    HandBar
+    HandBar,
+    ActionButton
   }
 }
 </script>
@@ -69,5 +72,11 @@ export default {
     left: 0;
     bottom: 0;
   }
+}
+.action-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
 }
 </style>
