@@ -81,6 +81,7 @@ export default {
   height: 400px;
   background-color: $main-color-2;
   border-radius: 22px;
+  border: 1px solid $main-color;
   max-width: 340px;
   .tabbed-view {
     min-height: 140px;

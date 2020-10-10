@@ -56,7 +56,8 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      margin-top: 30px;
+      margin-left: 24px;
+      margin-top: 0px;
       margin-bottom: 0;
       font-family: icomoon;
       font-size: 20px;
