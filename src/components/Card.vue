@@ -29,12 +29,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/variables';
 @import '@/assets/styles/icomoon';
 
 .card {
   width: 150px;
   height: 270px;
-  background-color: #4a6572;
+  background-color: $main-color;
   border-radius: 22px;
   position: relative;
   &::before {
@@ -45,7 +46,7 @@ export default {
     height: 270px;
     top: 5px;
     left: -5px;
-    background-color: #232f34;
+    background-color: $main-color-2;
     border-radius: 22px;
   }
   p {
@@ -58,7 +59,7 @@ export default {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: bold;
-    color: white;
+    color: $main-color-3;
     &::after {
       position: absolute;
       top: 0;
@@ -67,7 +68,7 @@ export default {
       margin-bottom: 0;
       font-family: icomoon;
       font-size: 20px;
-      color: white;     
+      color: $main-color-3;     
     }
     &.card--spades {
       &::after {
