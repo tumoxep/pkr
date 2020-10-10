@@ -1,8 +1,8 @@
 <template>
   <div class="root-view">
     <GameBar />
-    <CardTable :cards="cards" />
-    <HandBar />
+    <CardTable :cards="tableCards" />
+    <HandBar :cards="handCards"/>
   </div>
 </template>
 
@@ -10,19 +10,38 @@
 import GameBar from '../components/GameBar'
 import CardTable from '../components/CardTable'
 import HandBar from '../components/HandBar'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'RootView',
   data() {
     return {
-      cards: [
+      tableCards: [
         { value: '10', type: 'spades' },
         { value: '10', type: 'spades' },
         { value: '10', type: 'spades' },
         { value: '10', type: 'spades' },
         { value: '10', type: 'spades' }
-      ]
+      ],
+      handCards: [
+        { value: '10', type: 'spades' },
+        { value: '10', type: 'spades' }
+      ]      
     }
+  },
+  methods: {
+    ...mapActions('ui', ['setInnerWidth']),
+    onResize() {
+      this.setInnerWidth(window.innerWidth)
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+    })
+  },
+  beforeDestroy() { 
+    window.removeEventListener('resize', this.onResize)
   },
   components: {
     GameBar,

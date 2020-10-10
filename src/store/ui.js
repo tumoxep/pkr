@@ -11,18 +11,25 @@ const state = () => ({
       { name: 'call', title: 'Call' },
       { name: 'raise', title: 'Raise' },
     ]
-  }
+  },
+  innerWidth: window.innerWidth
 })
 
 const actions = {
   setTab({ commit }, { tab, tabId }) {
     commit('setTab', { tab, tabId })
+  },
+  setInnerWidth({ commit }, innerWidth) {
+    commit('setInnerWidth', innerWidth)
   }
 }
 
 const mutations = {
   setTab(state, { tab, tabId }) {
     state.tabs[tabId] = state.tabs[tabId].map(el => Object.assign({}, el, { active: tab.name === el.name }))
+  },
+  setInnerWidth(state, innerWidth) {
+    state.innerWidth = innerWidth;
   }
 }
 
