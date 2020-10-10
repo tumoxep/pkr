@@ -2,13 +2,13 @@
   <div class="hand-bar">
     <TabbedView :tabId="'handBar'">
       <template v-if="activeTab === 'fold'">
-        <p>fold</p>
+        <Checkbox :value="isFoldAny">fold any</Checkbox>
       </template>
       <template v-else-if="activeTab === 'check'">
-        <p>check</p>
+        <Checkbox :value="isAutoCheck">auto check/fold</Checkbox>
       </template>
       <template v-else-if="activeTab === 'call'">
-        <p>call</p>
+        <Checkbox :value="isCallAny">call any</Checkbox>
       </template>
       <template v-else-if="activeTab === 'raise'">
         <p>raise</p>
@@ -30,14 +30,18 @@
 import { mapGetters } from 'vuex'
 import TabbedView from '../views/Tabbed'
 import Card from '../components/Card'
+import Checkbox from '../components/Checkbox'
 
 export default {
   name: 'HandBar',
-  props: {
-    cards: {
-      type: Array
+  data() {
+    return {
+      isFoldAny: false,
+      isAutoCheck: false,
+      isCallAny: false
     }
   },
+  props: ['cards'],
   computed: {
     ...mapGetters('ui', { activeTab: 'activeHandBarTab' }),
     cardStyle() {
@@ -49,15 +53,15 @@ export default {
     },
   },
   components: {
+    TabbedView,
     Card,
-    TabbedView
+    Checkbox
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-
+@import '@/assets/styles/constants';
 .hand-bar {
   width: 100%;
   height: 400px;
@@ -73,5 +77,8 @@ export default {
   display: flex;
   position: relative;
   padding-left: 10px;
+}
+.checkbox {
+  margin-top: 10px;
 }
 </style>

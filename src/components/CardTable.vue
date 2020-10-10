@@ -16,11 +16,7 @@ import Card from '../components/Card'
 
 export default {
   name: 'CardTable',
-  props: {
-    cards: {
-      type: Array
-    }
-  },
+  props: ['cards'],
   computed: {
     ...mapState('ui', ['innerWidth']),
     cardStyle() {

@@ -21,11 +21,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'TabbedView',
-  props: {
-    tabId: {
-      type: String
-    }
-  },
+  props: ['tabId'],
   computed: {
     ...mapGetters('ui', ['tabsById']),
     tabs() {
@@ -34,7 +30,7 @@ export default {
   },
   methods: {
     onClick(tab) {
-      this.$store.dispatch('ui/setTab', { tab, tabId: this.tabId });
+      this.$store.dispatch('ui/setTab', { tab, tabId: this.tabId })
     },
     headerItemClass(tab) {
       return {
@@ -46,8 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-
+@import '@/assets/styles/constants';
 .tabbed-view {
   padding-top: 10px;
   padding-left: 10px;

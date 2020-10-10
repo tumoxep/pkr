@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
+@import '@/assets/styles/constants';
 .hand-bar {
   position: absolute;
   margin-bottom: -170px;
