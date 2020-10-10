@@ -35,5 +35,8 @@ export default {
 .game-bar {
   width: 100%;
   height: 270px;
+  @media (min-width: #{$breakpoint-mobile}) {
+    height: 640px;
+  }
 }
 </style>
