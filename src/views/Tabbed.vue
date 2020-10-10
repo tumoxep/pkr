@@ -17,19 +17,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'TabbedView',
   props: {
-    tabs: {
-      type: Array
-    },
-    tabSetAction: {
+    tabId: {
       type: String
+    }
+  },
+  computed: {
+    ...mapGetters('ui', ['tabsById']),
+    tabs() {
+      return this.tabsById(this.tabId)
     }
   },
   methods: {
     onClick(tab) {
-      this.$store.dispatch(this.tabSetAction, tab);
+      this.$store.dispatch('ui/setTab', { tab, tabId: this.tabId });
     },
     headerItemClass(tab) {
       return {
