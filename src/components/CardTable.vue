@@ -11,42 +11,30 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Card from '../components/Card'
 
 export default {
   name: 'CardTable',
-  data() {
-    return {
-      innerWidth: window.innerWidth
-    }
-  },
   props: {
     cards: {
       type: Array
     }
   },
-  methods: {
-    onResize() {
-      this.innerWidth = window.innerWidth
-    }
-  },
   computed: {
+    ...mapState('ui', ['innerWidth']),
     cardStyle() {
-      return (index) => {
+      return index => {
+        // this.innerWidth - 340 - после 767 учитывает HandBar 
+        const width = this.innerWidth > 767 ? this.innerWidth - 340 : this.innerWidth
         return {
+          // костыль отрисовки тени
           'z-index': index,
-          'margin-right': `-${this.innerWidth > 750 ? 0 : (750 - this.innerWidth) / 4}px`
+          // 150 * 5 = 750. Если контейнер меньше, докидываем каждой карте четверть разницы
+          'margin-right': `-${width > 750 ? 0 : (750 - width) / 4}px`
         }
       }
     },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.onResize)
-    })
-  },
-  beforeDestroy() { 
-    window.removeEventListener('resize', this.onResize)
   },
   components: {
     Card
