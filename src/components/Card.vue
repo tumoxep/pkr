@@ -9,14 +9,7 @@
 <script>
 export default {
   name: 'Card',
-  props: {
-    cardValue: {
-      type: String
-    },
-    cardType: {
-      type: String
-    }
-  },
+  props: ['cardValue', 'cardType'],
   computed: {
     cardValueClass() {
       if (!this.cardType) {
@@ -29,9 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
+@import '@/assets/styles/constants';
 @import '@/assets/styles/icomoon';
-
 .card {
   width: 150px;
   height: 270px;
@@ -56,7 +48,7 @@ export default {
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: $base-font-family;
     font-size: 20px;
     font-weight: bold;
     color: $main-color-3;
@@ -64,7 +56,8 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      margin-top: 30px;
+      margin-left: 24px;
+      margin-top: 0px;
       margin-bottom: 0;
       font-family: icomoon;
       font-size: 20px;

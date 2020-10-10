@@ -1,0 +1,37 @@
+// Heavily inspired by Stephanie Eckles article https://moderncss.dev/pure-css-custom-checkbox-style/
+@import '@/assets/styles/constants';
+.checkbox {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-gap: 5px;
+  font-size: 16px;
+  font-family: $base-font-family;
+  color: $main-color;
+}
+.checkbox__control {
+  display: inline-grid;
+  width: 1em;
+  height: 1em;
+  border-radius: 2px;
+  border: 1px solid $main-color-3;
+  svg {
+    transition: transform 0.1s ease-in 25ms;
+    transform: scale(0);
+    transform-origin: center;
+  }
+}
+.checkbox__input {
+  display: grid;
+  grid-template-areas: "checkbox";
+  > * {
+    grid-area: checkbox;
+  }
+  input {
+    opacity: 0;
+    width: 1em;
+    height: 1em;
+    &:checked + .checkbox__control svg {
+      transform: scale(1);
+    }
+  }
+}

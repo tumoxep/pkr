@@ -9,9 +9,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
+@import '@/assets/styles/constants';
 @import '@/assets/styles/icomoon';
-
 .action-button {
   &::before {
     content: '\ea10';

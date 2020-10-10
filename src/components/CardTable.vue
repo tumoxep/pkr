@@ -16,11 +16,7 @@ import Card from '../components/Card'
 
 export default {
   name: 'CardTable',
-  props: {
-    cards: {
-      type: Array
-    }
-  },
+  props: ['cards'],
   computed: {
     ...mapState('ui', ['innerWidth']),
     cardStyle() {
@@ -31,7 +27,7 @@ export default {
           // костыль отрисовки тени
           'z-index': index,
           // 150 * 5 = 750. Если контейнер меньше, докидываем каждой карте четверть разницы
-          'margin-right': `-${width > 750 ? 0 : (750 - width) / 4}px`
+          'margin-right': `-${width > 750 ? 0 : (750 - width) / 4 - 20}px`
         }
       }
     },

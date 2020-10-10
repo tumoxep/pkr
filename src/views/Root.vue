@@ -55,28 +55,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
+@import '@/assets/styles/constants';
 .hand-bar {
   position: absolute;
-  margin-bottom: -170px;
+  margin-bottom: -220px;
   @media (min-width: #{$breakpoint-mobile}) {
-    margin-bottom: 0;
+    margin-bottom: -70px;
   }
   bottom: 0;
   right: 0;
   z-index: 5;
-}
-.card-table {
-  @media (min-width: #{$breakpoint-mobile}) {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
 }
 .action-button {
   position: absolute;
   bottom: 20px;
   right: 20px;
   z-index: 10;
+}
+.game-bar {
+  width: 100%;
+  height: 240px;
+  @media (min-width: #{$breakpoint-mobile}) {
+    height: 640px;
+  }
 }
 </style>

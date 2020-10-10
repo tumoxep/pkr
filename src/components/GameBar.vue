@@ -30,13 +30,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/variables';
-
+@import '@/assets/styles/constants';
 .game-bar {
-  width: 100%;
-  height: 270px;
-  @media (min-width: #{$breakpoint-mobile}) {
-    height: 640px;
-  }
+  background-color: $main-color-2;
 }
 </style>
