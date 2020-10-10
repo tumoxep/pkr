@@ -11,7 +11,15 @@
         <Checkbox :value="isCallAny">call any</Checkbox>
       </template>
       <template v-else-if="activeTab === 'raise'">
-        <p>raise</p>
+        <p class="raise-value">{{ raiseValue }}</p>
+        <vue-slider
+          v-model="raiseValue"
+          :width="'82%'"
+          :height="2"
+          :dotSize="28"
+          :tooltip="'none'"
+          :dotStyle="{ 'background-color': mainColor }"
+        />
       </template>
     </TabbedView>
     <div class="card-table">
@@ -28,20 +36,24 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import VueSlider from 'vue-slider-component'
+import themeMixin from '@/theme-mixin'
 import TabbedView from '../views/Tabbed'
 import Card from '../components/Card'
 import Checkbox from '../components/Checkbox'
 
 export default {
   name: 'HandBar',
+  mixins: [themeMixin],
+  props: ['cards'],
   data() {
     return {
       isFoldAny: false,
       isAutoCheck: false,
-      isCallAny: false
+      isCallAny: false,
+      raiseValue: 0
     }
   },
-  props: ['cards'],
   computed: {
     ...mapGetters('ui', { activeTab: 'activeHandBarTab' }),
     cardStyle() {
@@ -53,6 +65,7 @@ export default {
     },
   },
   components: {
+    VueSlider,
     TabbedView,
     Card,
     Checkbox
@@ -60,6 +73,7 @@ export default {
 }
 </script>
 
+<style lang="scss" src="@/assets/styles/vue-slider-theme.scss"></style>
 <style lang="scss" scoped>
 @import '@/assets/styles/constants';
 .hand-bar {
@@ -80,5 +94,17 @@ export default {
 }
 .checkbox {
   margin-top: 10px;
+}
+.raise-value {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: $main-color-3;
+  font-family: $base-font-family;
+  font-size: 40px;
+  font-style: italic;
+  font-weight: bold;
+}
+.vue-slider {
+  margin-left: 14px;
 }
 </style>
