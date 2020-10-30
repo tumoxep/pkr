@@ -1,0 +1,82 @@
+version: "3.8"
+   
+services:
+  pkr-postgres:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=${PKR_DB_PASSWORD}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - "${PKR_PGDATA_DIR}:/var/lib/postgresql/data"
+      - "${PKR_PGCONF_DIR}/postgresql.conf:/etc/postgresql/postgresql.conf"
+    ports:
+      - "5432:5432"
+
+  pkr-redis:
+    image: redis:2.8
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  pkr-backend:
+    build: .
+    environment:
+      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
+      - PKR_DB_NAME=${PKR_DB_NAME}
+      - PKR_DB_USER=${PKR_DB_USER}
+      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pkr-postgres
+      - pkr-redis
+    volumes:
+      - ".:/code"
+
+  pkr-makemigrations-game:
+    build: .
+    environment:
+      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
+      - PKR_DB_NAME=${PKR_DB_NAME}
+      - PKR_DB_USER=${PKR_DB_USER}
+      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    command: python manage.py makemigrations game
+    depends_on:
+      - pkr-postgres
+    volumes:
+      - ".:/code"
+
+  pkr-migrate:
+    build: .
+    environment:
+      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
+      - PKR_DB_NAME=${PKR_DB_NAME}
+      - PKR_DB_USER=${PKR_DB_USER}
+      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    command: python manage.py migrate
+    depends_on:
+      - pkr-postgres
+    volumes:
+      - ".:/code"
+
+  pkr-createsuperuser:
+    build: .
+    environment:
+      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
+      - PKR_DB_NAME=${PKR_DB_NAME}
+      - PKR_DB_USER=${PKR_DB_USER}
+      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    stdin_open: true
+    tty: true
+    command: python manage.py createsuperuser
+    depends_on:
+      - pkr-postgres
+    volumes:
+      - ".:/code"
+
+  pkr-front:
+    build: ./front
+    ports:
+      - "80:80"

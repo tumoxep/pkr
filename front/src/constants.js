@@ -4,3 +4,8 @@ export const THEME = {
   mainColor3: 'white',
   baseFontFamily: 'Arial, Helvetica, sans-serif'
 }
+
+export const ENDPOINTS = {
+  AUTH: '/pkr-api/auth/',
+  REGISTER: '/pkr-api/register/'
+}
