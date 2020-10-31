@@ -19,16 +19,32 @@ services:
     ports:
       - "6379:6379"
 
-  pkr-backend:
+  pkr-backend-api:
     build: .
     environment:
       - PKR_SECRET_KEY=${PKR_SECRET_KEY}
       - PKR_DB_NAME=${PKR_DB_NAME}
       - PKR_DB_USER=${PKR_DB_USER}
       - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
-    command: python manage.py runserver 0.0.0.0:8000
+    command: uwsgi --ini /etc/uwsgi.ini
     ports:
-      - "8000:8000"
+      - "8001:8001"
+    depends_on:
+      - pkr-postgres
+      - pkr-redis
+    volumes:
+      - ".:/code"
+
+  pkr-backend-ws:
+    build: .
+    environment:
+      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
+      - PKR_DB_NAME=${PKR_DB_NAME}
+      - PKR_DB_USER=${PKR_DB_USER}
+      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    command: daphne pkrbcknd.asgi:application -p 8002
+    ports:
+      - "8002:8002"
     depends_on:
       - pkr-postgres
       - pkr-redis
