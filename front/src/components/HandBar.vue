@@ -35,47 +35,47 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import VueSlider from 'vue-slider-component'
-import themeMixin from '@/theme-mixin'
-import TabbedView from '../views/Tabbed'
-import Card from '../components/Card'
-import Checkbox from '../components/Checkbox'
+import { mapGetters } from "vuex";
+import VueSlider from "vue-slider-component";
+import themeMixin from "@/theme-mixin";
+import TabbedView from "../views/Tabbed";
+import Card from "../components/Card";
+import Checkbox from "../components/Checkbox";
 
 export default {
-  name: 'HandBar',
+  name: "HandBar",
   mixins: [themeMixin],
-  props: ['cards'],
+  props: ["cards"],
   data() {
     return {
       isFoldAny: false,
       isAutoCheck: false,
       isCallAny: false,
-      raiseValue: 0
-    }
+      raiseValue: 0,
+    };
   },
   computed: {
-    ...mapGetters('ui', { activeTab: 'activeHandBarTab' }),
+    ...mapGetters("ui", { activeTab: "activeHandBarTab" }),
     cardStyle() {
-      return index => {
+      return (index) => {
         return {
-          'z-index': index
-        }
-      }
+          "z-index": index,
+        };
+      };
     },
   },
   components: {
     VueSlider,
     TabbedView,
     Card,
-    Checkbox
-  }
-}
+    Checkbox,
+  },
+};
 </script>
 
 <style lang="scss" src="@/assets/styles/vue-slider-theme.scss"></style>
 <style lang="scss" scoped>
-@import '@/assets/styles/constants';
+@import "@/assets/styles/constants";
 .hand-bar {
   width: 100%;
   height: 400px;

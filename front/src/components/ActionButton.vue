@@ -4,16 +4,16 @@
 
 <script>
 export default {
-  name: 'ActionButton',
-}
+  name: "ActionButton",
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/constants';
-@import '@/assets/styles/icomoon';
+@import "@/assets/styles/constants";
+@import "@/assets/styles/icomoon";
 .action-button {
   &::before {
-    content: '\ea10';
+    content: "\ea10";
     font-family: icomoon;
   }
   font-size: 20px;

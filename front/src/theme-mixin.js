@@ -1,7 +1,7 @@
-import { THEME } from '@/constants'
+import { THEME } from "@/constants";
 
 export default {
   data() {
-    return Object.assign({}, THEME)
-  }
-}
+    return Object.assign({}, THEME);
+  },
+};

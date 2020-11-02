@@ -1,5 +1,5 @@
 // Heavily inspired by Stephanie Eckles article https://moderncss.dev/pure-css-custom-checkbox-style/
-@import '@/assets/styles/constants';
+@import "@/assets/styles/constants";
 .checkbox {
   display: grid;
   grid-template-columns: min-content auto;

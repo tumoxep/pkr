@@ -5,4 +5,5 @@ WORKDIR /code
 COPY requirements.txt /code/
 COPY ./uwsgi.ini /etc/
 RUN pip install -r requirements.txt
+RUN pip install -U 'Twisted[tls,http2]'
 COPY . /code/

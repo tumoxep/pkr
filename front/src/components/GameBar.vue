@@ -15,22 +15,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import TabbedView from '../views/Tabbed'
+import { mapGetters } from "vuex";
+import TabbedView from "../views/Tabbed";
 
 export default {
-  name: 'GameBar',
+  name: "GameBar",
   computed: {
-    ...mapGetters('ui', { activeTab: 'activeGameBarTab' })
+    ...mapGetters("ui", { activeTab: "activeGameBarTab" }),
   },
   components: {
-    TabbedView
-  }
-}
+    TabbedView,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/constants';
+@import "@/assets/styles/constants";
 .game-bar {
   background-color: $main-color-2;
 }

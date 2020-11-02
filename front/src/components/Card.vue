@@ -8,22 +8,22 @@
 
 <script>
 export default {
-  name: 'Card',
-  props: ['cardValue', 'cardType'],
+  name: "Card",
+  props: ["cardValue", "cardType"],
   computed: {
     cardValueClass() {
       if (!this.cardType) {
-        return ''
+        return "";
       }
-      return `card--${this.cardType}`
-    }
-  }
-}
+      return `card--${this.cardType}`;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/constants';
-@import '@/assets/styles/icomoon';
+@import "@/assets/styles/constants";
+@import "@/assets/styles/icomoon";
 .card {
   width: 150px;
   height: 270px;
@@ -31,7 +31,7 @@ export default {
   border-radius: 22px;
   position: relative;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     z-index: -1;
     width: 150px;
@@ -61,26 +61,26 @@ export default {
       margin-bottom: 0;
       font-family: icomoon;
       font-size: 20px;
-      color: $main-color-3;     
+      color: $main-color-3;
     }
     &.card--spades {
       &::after {
-        content: '\e917';
+        content: "\e917";
       }
     }
     &.card--clubs {
       &::after {
-        content: '\e918';
+        content: "\e918";
       }
     }
     &.card--diamonds {
       &::after {
-        content: '\e919';
+        content: "\e919";
       }
     }
     &.card--heart {
       &::after {
-        content: '\e9da';
+        content: "\e9da";
       }
     }
   }

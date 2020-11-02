@@ -2,60 +2,60 @@
   <div class="root-view">
     <GameBar />
     <CardTable :cards="tableCards" />
-    <HandBar :cards="handCards"/>
+    <HandBar :cards="handCards" />
     <ActionButton />
   </div>
 </template>
 
 <script>
-import GameBar from '../components/GameBar'
-import CardTable from '../components/CardTable'
-import HandBar from '../components/HandBar'
-import ActionButton from '../components/ActionButton'
-import { mapActions } from 'vuex'
+import GameBar from "../components/GameBar";
+import CardTable from "../components/CardTable";
+import HandBar from "../components/HandBar";
+import ActionButton from "../components/ActionButton";
+import { mapActions } from "vuex";
 
 export default {
-  name: 'RootView',
+  name: "RootView",
   data() {
     return {
       tableCards: [
-        { value: '10', type: 'spades' },
-        { value: '10', type: 'spades' },
-        { value: '10', type: 'spades' },
-        { value: '10', type: 'spades' },
-        { value: '10', type: 'spades' }
+        { value: "10", type: "spades" },
+        { value: "10", type: "spades" },
+        { value: "10", type: "spades" },
+        { value: "10", type: "spades" },
+        { value: "10", type: "spades" },
       ],
       handCards: [
-        { value: '10', type: 'spades' },
-        { value: '10', type: 'spades' }
-      ]      
-    }
+        { value: "10", type: "spades" },
+        { value: "10", type: "spades" },
+      ],
+    };
   },
   methods: {
-    ...mapActions('ui', ['setInnerWidth']),
+    ...mapActions("ui", ["setInnerWidth"]),
     onResize() {
-      this.setInnerWidth(window.innerWidth)
-    }
+      this.setInnerWidth(window.innerWidth);
+    },
   },
   mounted() {
     this.$nextTick(() => {
-      window.addEventListener('resize', this.onResize)
-    })
+      window.addEventListener("resize", this.onResize);
+    });
   },
-  beforeDestroy() { 
-    window.removeEventListener('resize', this.onResize)
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResize);
   },
   components: {
     GameBar,
     CardTable,
     HandBar,
-    ActionButton
-  }
-}
+    ActionButton,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/constants';
+@import "@/assets/styles/constants";
 .hand-bar {
   position: absolute;
   margin-bottom: -220px;

@@ -1,4 +1,4 @@
-@import '@/assets/styles/constants';
+@import "@/assets/styles/constants";
 /* component style */
 .vue-slider-disabled {
   opacity: 0.5;
@@ -21,7 +21,8 @@
 .vue-slider-mark {
   z-index: 4;
 }
-.vue-slider-mark:first-child .vue-slider-mark-step, .vue-slider-mark:last-child .vue-slider-mark-step {
+.vue-slider-mark:first-child .vue-slider-mark-step,
+.vue-slider-mark:last-child .vue-slider-mark-step {
   display: none;
 }
 .vue-slider-mark-step {

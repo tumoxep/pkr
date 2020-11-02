@@ -1,5 +1,12 @@
 version: "3.8"
-   
+
+x-common-variables: &pkr-backend-variables
+  PKR_SECRET_KEY: ${PKR_SECRET_KEY}
+  PKR_DB_NAME: ${PKR_DB_NAME}
+  PKR_DB_USER: ${PKR_DB_USER}
+  PKR_DB_PASSWORD: ${PKR_DB_PASSWORD}
+  PKR_DOMAIN: ${PKR_DOMAIN}
+
 services:
   pkr-postgres:
     image: postgres
@@ -21,11 +28,7 @@ services:
 
   pkr-backend-api:
     build: .
-    environment:
-      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
-      - PKR_DB_NAME=${PKR_DB_NAME}
-      - PKR_DB_USER=${PKR_DB_USER}
-      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    environment: *pkr-backend-variables
     command: uwsgi --ini /etc/uwsgi.ini
     ports:
       - "8001:8001"
@@ -37,12 +40,8 @@ services:
 
   pkr-backend-ws:
     build: .
-    environment:
-      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
-      - PKR_DB_NAME=${PKR_DB_NAME}
-      - PKR_DB_USER=${PKR_DB_USER}
-      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
-    command: daphne pkrbcknd.asgi:application -p 8002
+    environment: *pkr-backend-variables
+    command: daphne -e ssl:8002:privateKey=${PKR_LETSENCRYPT_DIR}/live/${PKR_DOMAIN}/privkey.pem:certKey=${PKR_LETSENCRYPT_DIR}/live/${PKR_DOMAIN}/cert.pem pkrbcknd.asgi:application
     ports:
       - "8002:8002"
     depends_on:
@@ -50,14 +49,11 @@ services:
       - pkr-redis
     volumes:
       - ".:/code"
+      - ${PKR_LETSENCRYPT_DIR}:${PKR_LETSENCRYPT_DIR}
 
   pkr-makemigrations-game:
     build: .
-    environment:
-      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
-      - PKR_DB_NAME=${PKR_DB_NAME}
-      - PKR_DB_USER=${PKR_DB_USER}
-      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    environment: *pkr-backend-variables
     command: python manage.py makemigrations game
     depends_on:
       - pkr-postgres
@@ -66,11 +62,7 @@ services:
 
   pkr-migrate:
     build: .
-    environment:
-      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
-      - PKR_DB_NAME=${PKR_DB_NAME}
-      - PKR_DB_USER=${PKR_DB_USER}
-      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    environment: *pkr-backend-variables
     command: python manage.py migrate
     depends_on:
       - pkr-postgres
@@ -79,11 +71,7 @@ services:
 
   pkr-createsuperuser:
     build: .
-    environment:
-      - PKR_SECRET_KEY=${PKR_SECRET_KEY}
-      - PKR_DB_NAME=${PKR_DB_NAME}
-      - PKR_DB_USER=${PKR_DB_USER}
-      - PKR_DB_PASSWORD=${PKR_DB_PASSWORD}
+    environment: *pkr-backend-variables
     stdin_open: true
     tty: true
     command: python manage.py createsuperuser
@@ -94,5 +82,8 @@ services:
 
   pkr-front:
     build: ./front
+    restart: unless-stopped
     ports:
-      - "80:80"
+      - 443:443/tcp
+    volumes:
+      - ${PKR_LETSENCRYPT_DIR}:${PKR_LETSENCRYPT_DIR}

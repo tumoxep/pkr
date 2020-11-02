@@ -17,32 +17,32 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'TabbedView',
-  props: ['tabId'],
+  name: "TabbedView",
+  props: ["tabId"],
   computed: {
-    ...mapGetters('ui', ['tabsById']),
+    ...mapGetters("ui", ["tabsById"]),
     tabs() {
-      return this.tabsById(this.tabId)
-    }
+      return this.tabsById(this.tabId);
+    },
   },
   methods: {
     onClick(tab) {
-      this.$store.dispatch('ui/setTab', { tab, tabId: this.tabId })
+      this.$store.dispatch("ui/setTab", { tab, tabId: this.tabId });
     },
     headerItemClass(tab) {
       return {
-        'is-active': tab.active
-      }
-    }
-  }
-}
+        "is-active": tab.active,
+      };
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/constants';
+@import "@/assets/styles/constants";
 .tabbed-view {
   padding-top: 10px;
   padding-left: 10px;

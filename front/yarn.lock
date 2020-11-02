@@ -8162,6 +8162,11 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-native-websocket@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/vue-native-websocket/-/vue-native-websocket-2.0.14.tgz#fddb56f9f93d2ecc861486ee3c8f29506ea2a168"
+  integrity sha512-oK8+xG1gmqRs4JngHGwEc4zWoRjsdMB20Sz8pemkh4lW2Vr2676/cDRtd30aGnO2xF7Oxf003wS5JO0kypUsCw==
+
 vue-property-decorator@^8.0.0:
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.5.1.tgz#571a91cf8d2b507f537d79bf8275af3184572fff"

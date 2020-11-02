@@ -1,11 +1,10 @@
-@import 'constants';
+@import "constants";
 
 @font-face {
-  font-family: 'icomoon';
-  src: url('#{$base-font-path}/icomoon.eot');
-  src: local('icomoon'),
-  local('icomoon'),
-  url('#{$base-font-path}/icomoon.woff') format('woff'),
-  url('#{$base-font-path}/icomoon.ttf') format('truetype');
+  font-family: "icomoon";
+  src: url("#{$base-font-path}/icomoon.eot");
+  src: local("icomoon"), local("icomoon"),
+    url("#{$base-font-path}/icomoon.woff") format("woff"),
+    url("#{$base-font-path}/icomoon.ttf") format("truetype");
   font-style: normal;
 }
