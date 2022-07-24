@@ -1,7 +1,6 @@
 # pkr
 
-## Deploy
-1. Set [environment variables](#environment-variables) on host
+## Setup
 1. Populate `PKR_LETSENCRYPT_DIR` ([this tutorial](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04#step-4-%E2%80%94-obtaining-an-ssl-certificate) helped me)
 1. Populate `PKR_PGCONF_DIR` (afaik at least set listen_addresses param)
 1. `docker-compose up -d pkr-postgres`
@@ -11,16 +10,6 @@
 1. `docker-compose run --rm pkr-createsuperuser`
 1. `docker-compose up -d pkr-backend-api pkr-backend-ws`
 1. `docker-compose up -d pkr-front`
-
-## Environment variables
-* `PKR_SECRET_KEY`
-* `PKR_DB_NAME`
-* `PKR_DB_USER`
-* `PKR_DB_PASSWORD`
-* `PKR_PGDATA_DIR`
-* `PKR_PGCONF_DIR`
-* `PKR_LETSENCRYPT_DIR`
-* `PKR_DOMAIN`
 
 ## Credits
 * checkbox.scss by Stephanie Eckles https://moderncss.dev/pure-css-custom-checkbox-style/

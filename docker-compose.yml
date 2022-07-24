@@ -1,12 +1,5 @@
 version: "3.8"
 
-x-common-variables: &pkr-backend-variables
-  PKR_SECRET_KEY: ${PKR_SECRET_KEY}
-  PKR_DB_NAME: ${PKR_DB_NAME}
-  PKR_DB_USER: ${PKR_DB_USER}
-  PKR_DB_PASSWORD: ${PKR_DB_PASSWORD}
-  PKR_DOMAIN: ${PKR_DOMAIN}
-
 services:
   pkr-postgres:
     image: postgres

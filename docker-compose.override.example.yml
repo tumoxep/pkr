@@ -1,0 +1,6 @@
+x-common-variables: &pkr-backend-variables
+  PKR_SECRET_KEY: "sampletext"
+  PKR_DB_NAME: "pkr"
+  PKR_DB_USER: "admin"
+  PKR_DB_PASSWORD: "1qaz2wsx"
+  PKR_DOMAIN: "localhost"
