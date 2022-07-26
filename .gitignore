@@ -107,3 +107,7 @@ ENV/
 *.pid
 
 docker-compose.override.yml
+deploy/nginx/nginx.conf
+deploy/postgres/postgresql.conf
+deploy/postgres/data
+deploy/certbot

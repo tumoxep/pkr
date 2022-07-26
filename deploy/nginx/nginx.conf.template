@@ -15,14 +15,30 @@ http {
   keepalive_timeout 65;
 
   upstream pkr_uwsgi {
-    server pkr-backend-api:8001;
+    server app:8001;
+  }
+
+  server {
+    listen 80;
+    listen [::]:80;
+
+    server_name ${DOMAIN} www.${DOMAIN};
+    server_tokens off;
+
+    location /.well-known/acme-challenge/ {
+      root /var/www/certbot;
+    }
+
+    location / {
+      return 301 https://${DOMAIN}$request_uri;
+    }
   }
 
   server {
     listen 443 ssl http2;
-    server_name ${PKR_DOMAIN};
-    ssl_certificate     /etc/letsencrypt/live/${PKR_DOMAIN}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${PKR_DOMAIN}/privkey.pem;
+    server_name ${DOMAIN};
+    ssl_certificate     /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
 
     location / {
       root /app;
@@ -36,7 +52,7 @@ http {
     }
     location /pkr-ws/ {
       rewrite ^/pkr-ws/(.*) /ws/$1 break;
-      proxy_pass https://${PKR_DOMAIN}:8002;
+      proxy_pass https://${DOMAIN}:8002;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "Upgrade";
     }

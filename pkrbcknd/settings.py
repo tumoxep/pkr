@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['PKR_SECRET_KEY']
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ['PKR_DOMAIN']]
+ALLOWED_HOSTS = [os.environ['DOMAIN']]
 
 
 # Application definition
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'pkrbcknd.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['PKR_DB_NAME'],
-        'USER': os.environ['PKR_DB_USER'],
-        'PASSWORD': os.environ['PKR_DB_PASSWORD'],
-        'HOST': 'pkr-postgres',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': 'db',
         'PORT': 5432,
     }
 }

@@ -1,15 +1,11 @@
-FROM node:latest as build-stage
+FROM node:16 as build
 WORKDIR /app
 COPY package*.json ./
 RUN yarn install
 COPY ./ .
 RUN yarn build
 
-FROM nginx as production-stage
+FROM nginx as deploy
 RUN mkdir /app
-COPY --from=build-stage /app/dist /app
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
-COPY uwsgi_params /etc/nginx/uwsgi_params
-COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY --from=build /app/dist /app
 CMD ["nginx", "-g", "daemon off;"]

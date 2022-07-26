@@ -1,82 +1,68 @@
 version: "3.8"
 
 services:
-  pkr-postgres:
+  db:
     image: postgres
     restart: unless-stopped
+    env_file: .env
     environment:
-      - POSTGRES_PASSWORD=${PKR_DB_PASSWORD}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - "${PKR_PGDATA_DIR}:/var/lib/postgresql/data"
-      - "${PKR_PGCONF_DIR}/postgresql.conf:/etc/postgresql/postgresql.conf"
+      - ./deploy/postgres/data:/var/lib/postgresql/data
+      - ./deploy/postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
     ports:
       - "5432:5432"
 
-  pkr-redis:
+  redis:
     image: redis:2.8
     restart: unless-stopped
     ports:
       - "6379:6379"
 
-  pkr-backend-api:
+  app:
     build: .
-    environment: *pkr-backend-variables
     command: uwsgi --ini /etc/uwsgi.ini
     ports:
       - "8001:8001"
+    env_file: .env
     depends_on:
-      - pkr-postgres
-      - pkr-redis
+      - db
+      - redis
     volumes:
-      - ".:/code"
+      - .:/code
+      - ./deploy/uwsgi.ini:/etc/uwsgi.ini:ro
 
-  pkr-backend-ws:
+  daphne:
     build: .
-    environment: *pkr-backend-variables
-    command: daphne -e ssl:8002:privateKey=${PKR_LETSENCRYPT_DIR}/live/${PKR_DOMAIN}/privkey.pem:certKey=${PKR_LETSENCRYPT_DIR}/live/${PKR_DOMAIN}/cert.pem pkrbcknd.asgi:application
+    command: daphne -e ssl:8002:privateKey=/certs/live/${DOMAIN}/privkey.pem:certKey=/certs/live/${DOMAIN}/cert.pem pkrbcknd.asgi:application
     ports:
       - "8002:8002"
+    env_file: .env
     depends_on:
-      - pkr-postgres
-      - pkr-redis
+      - db
+      - redis
     volumes:
-      - ".:/code"
-      - ${PKR_LETSENCRYPT_DIR}:${PKR_LETSENCRYPT_DIR}
+      - .:/code
+      - ./deploy/certbot/conf/:/certs:ro
 
-  pkr-makemigrations-game:
-    build: .
-    environment: *pkr-backend-variables
-    command: python manage.py makemigrations game
-    depends_on:
-      - pkr-postgres
-    volumes:
-      - ".:/code"
-
-  pkr-migrate:
-    build: .
-    environment: *pkr-backend-variables
-    command: python manage.py migrate
-    depends_on:
-      - pkr-postgres
-    volumes:
-      - ".:/code"
-
-  pkr-createsuperuser:
-    build: .
-    environment: *pkr-backend-variables
-    stdin_open: true
-    tty: true
-    command: python manage.py createsuperuser
-    depends_on:
-      - pkr-postgres
-    volumes:
-      - ".:/code"
-
-  pkr-front:
+  front:
     build: ./front
     restart: unless-stopped
     ports:
-      - 443:443/tcp
+      - 80:80
+      - 443:443
+    restart: always
     volumes:
-      - ${PKR_LETSENCRYPT_DIR}:${PKR_LETSENCRYPT_DIR}
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/nginx/uwsgi_params:/etc/nginx/uwsgi_params:ro
+      - ./deploy/certbot/www:/var/www/certbot/:ro
+      - ./deploy/certbot/conf/:/etc/nginx/ssl/:ro
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./deploy/certbot/www/:/var/www/certbot/:rw
+      - ./deploy/certbot/conf/:/etc/letsencrypt/:rw
