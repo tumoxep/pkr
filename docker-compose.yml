@@ -23,30 +23,18 @@ services:
       - "6379:6379"
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     command: uwsgi --ini /etc/uwsgi.ini
     ports:
       - "8001:8001"
     env_file: .env
-    depends_on:
-      - db
-      - redis
     volumes:
       - .:/code
       - ./deploy/uwsgi.ini:/etc/uwsgi.ini:ro
-
-  daphne:
-    build: .
-    command: daphne -e ssl:8002:privateKey=/certs/live/${DOMAIN}/privkey.pem:certKey=/certs/live/${DOMAIN}/cert.pem pkrbcknd.asgi:application
-    ports:
-      - "8002:8002"
-    env_file: .env
-    depends_on:
-      - db
-      - redis
-    volumes:
-      - .:/code
-      - ./deploy/certbot/conf/:/certs:ro
+      - ./deploy/static:/code/static
 
   front:
     build: ./front
@@ -60,6 +48,7 @@ services:
       - ./deploy/nginx/uwsgi_params:/etc/nginx/uwsgi_params:ro
       - ./deploy/certbot/www:/var/www/certbot/:ro
       - ./deploy/certbot/conf/:/etc/nginx/ssl/:ro
+      - ./deploy/static:/app/static:ro
 
   certbot:
     image: certbot/certbot:latest

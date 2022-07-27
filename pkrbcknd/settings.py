@@ -32,15 +32,13 @@ ALLOWED_HOSTS = [os.environ['DOMAIN']]
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
-    'background_task',
-    'game',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'game',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +81,7 @@ DATABASES = {
         'NAME': os.environ['DB_NAME'],
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': 'db',
+        'HOST': os.environ['DOMAIN'],
         'PORT': 5432,
     }
 }
@@ -126,15 +124,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# mysite/settings.py
-# Channels
-ASGI_APPLICATION = 'pkrbcknd.routing.application'
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('pkr-redis', 6379)],
-        },
-    },
-}
+STATIC_ROOT = './static/'
