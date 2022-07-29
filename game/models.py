@@ -65,9 +65,10 @@ class Room(models.Model):
     name = models.CharField(max_length=200, default='')
     players = models.ManyToManyField(User, through='RoomMembership', related_name='+')
     deck = models.ManyToManyField(Card, through='RoomDeckCard', related_name='+')
-    ante = models.IntegerField(default=0)
     table = models.ManyToManyField(Card, through='RoomTableCard', related_name='+')
-
+    ante = models.IntegerField(default=0)
+    bank = models.IntegerField(default=0)
+    
     class RoomStatuses(models.TextChoices):
         WAIT = 'wt', _('waiting for players')
         PREFLOP = 'pf', _('preflop')
@@ -86,6 +87,7 @@ class Room(models.Model):
 class RoomMembership(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    is_ready = models.BooleanField(default=False)
     hand = models.ManyToManyField(Card)
     bank = models.IntegerField(default=0)
     raise_value = models.IntegerField(default=0)

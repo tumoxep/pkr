@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'celery',
     'game',
 ]
 
@@ -130,4 +131,12 @@ STATIC_ROOT = './static/'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
+}
+
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672'
+CELERY_BEAT_SCHEDULE = {
+    'add-every-30-seconds': {
+        'task': 'game.tasks.check_rooms',
+        'schedule': 30.0
+    },
 }
