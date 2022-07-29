@@ -64,10 +64,10 @@ class Card(models.Model):
 class Room(models.Model):
     name = models.CharField(max_length=200, default='')
     players = models.ManyToManyField(User, through='RoomMembership', related_name='+')
-    deck = models.ManyToManyField(Card, through='RoomDeckCard', related_name='+')
     table = models.ManyToManyField(Card, through='RoomTableCard', related_name='+')
     ante = models.IntegerField(default=0)
     bank = models.IntegerField(default=0)
+    turn_timeout = models.IntegerField(default=30)
     
     class RoomStatuses(models.TextChoices):
         WAIT = 'wt', _('waiting for players')
@@ -88,10 +88,9 @@ class RoomMembership(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_ready = models.BooleanField(default=False)
-    hand = models.ManyToManyField(Card)
     bank = models.IntegerField(default=0)
     raise_value = models.IntegerField(default=0)
-
+    
     class RoomMemberActions(models.TextChoices):
         BET = 'bet', _('bet')
         CALL = 'call', _('call')
@@ -104,6 +103,8 @@ class RoomMembership(models.Model):
         choices=RoomMemberActions.choices,
         default=RoomMemberActions.FOLD,
     )
+    turn_started = models.DateTimeField(null=True)
+    acted_last = models.DateTimeField(null=True)
 
     class RoomMemberRoles(models.TextChoices):
         S_BLIND = 's', _('small blind')
@@ -116,11 +117,6 @@ class RoomMembership(models.Model):
         default=RoomMemberRoles.DEFAULT,
     )
 
-
-class RoomDeckCard(models.Model):
-    card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    index = models.IntegerField(default=0)
 
 class RoomTableCard(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
