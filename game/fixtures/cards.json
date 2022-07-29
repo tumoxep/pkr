@@ -1,0 +1,366 @@
+[
+    {
+      "model": "game.card",
+      "pk": 1,
+      "fields": {
+        "value": "C2"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 2,
+      "fields": {
+        "value": "C3"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 3,
+      "fields": {
+        "value": "C4"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 4,
+      "fields": {
+        "value": "C5"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 5,
+      "fields": {
+        "value": "C6"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 6,
+      "fields": {
+        "value": "C7"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 7,
+      "fields": {
+        "value": "C8"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 8,
+      "fields": {
+        "value": "C9"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 9,
+      "fields": {
+        "value": "CX"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 10,
+      "fields": {
+        "value": "CJ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 11,
+      "fields": {
+        "value": "CQ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 12,
+      "fields": {
+        "value": "CK"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 13,
+      "fields": {
+        "value": "CA"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 14,
+      "fields": {
+        "value": "D2"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 15,
+      "fields": {
+        "value": "D3"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 16,
+      "fields": {
+        "value": "D4"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 17,
+      "fields": {
+        "value": "D5"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 18,
+      "fields": {
+        "value": "D6"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 19,
+      "fields": {
+        "value": "D7"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 20,
+      "fields": {
+        "value": "D8"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 21,
+      "fields": {
+        "value": "D9"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 22,
+      "fields": {
+        "value": "DX"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 23,
+      "fields": {
+        "value": "DJ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 24,
+      "fields": {
+        "value": "DQ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 25,
+      "fields": {
+        "value": "DK"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 26,
+      "fields": {
+        "value": "DA"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 27,
+      "fields": {
+        "value": "H2"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 28,
+      "fields": {
+        "value": "H3"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 29,
+      "fields": {
+        "value": "H4"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 30,
+      "fields": {
+        "value": "H5"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 31,
+      "fields": {
+        "value": "H6"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 32,
+      "fields": {
+        "value": "H7"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 33,
+      "fields": {
+        "value": "H8"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 34,
+      "fields": {
+        "value": "H9"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 35,
+      "fields": {
+        "value": "HX"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 36,
+      "fields": {
+        "value": "HJ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 37,
+      "fields": {
+        "value": "HQ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 38,
+      "fields": {
+        "value": "HK"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 39,
+      "fields": {
+        "value": "HA"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 40,
+      "fields": {
+        "value": "S2"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 41,
+      "fields": {
+        "value": "S3"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 42,
+      "fields": {
+        "value": "S4"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 43,
+      "fields": {
+        "value": "S5"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 44,
+      "fields": {
+        "value": "S6"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 45,
+      "fields": {
+        "value": "S7"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 46,
+      "fields": {
+        "value": "S8"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 47,
+      "fields": {
+        "value": "S9"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 48,
+      "fields": {
+        "value": "SX"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 49,
+      "fields": {
+        "value": "SJ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 50,
+      "fields": {
+        "value": "SQ"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 51,
+      "fields": {
+        "value": "SK"
+      }
+    },
+    {
+      "model": "game.card",
+      "pk": 52,
+      "fields": {
+        "value": "SA"
+      }
+    }
+  ]

@@ -1,5 +1,6 @@
 from django.contrib import admin
 
-from .models import Room
+from . import models
 
-admin.site.register(Room)
+admin.site.register(models.Room)
+admin.site.register(models.Card)

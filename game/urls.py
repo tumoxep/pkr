@@ -1,11 +1,11 @@
-from django.urls import path
-from django.contrib.auth import views as auth_views
+from django.urls import include, path
+from rest_framework import routers
 
 from . import views
 
+router = routers.DefaultRouter()
+router.register(r'rooms', views.RoomViewSet)
+
 urlpatterns = [
-    path('register/', views.register, name='register'),
-    path('auth/', auth_views.LoginView.as_view(), name='auth'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('list_rooms/', views.list_rooms, name='list_rooms'),
+    path('', include(router.urls)),
 ]
