@@ -137,6 +137,6 @@ CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672'
 CELERY_BEAT_SCHEDULE = {
     'add-every-30-seconds': {
         'task': 'game.tasks.check_rooms',
-        'schedule': 30.0
+        'schedule': 5.0
     },
 }

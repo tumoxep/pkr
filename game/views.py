@@ -7,6 +7,6 @@ class RoomViewSet(viewsets.ModelViewSet):
     queryset = models.Room.objects.all()
     serializer_class = serializers.RoomSerializer
 
-class RoomMembershipViewSet(viewsets.ModelViewSet):
-    queryset = models.RoomMembership.objects.all()
-    serializer_class = serializers.RoomMembershipSerializer
+class MembershipViewSet(viewsets.ModelViewSet):
+    queryset = models.Membership.objects.all()
+    serializer_class = serializers.MembershipSerializer

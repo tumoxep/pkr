@@ -63,62 +63,51 @@ class Card(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=200, default='')
-    players = models.ManyToManyField(User, through='RoomMembership', related_name='+')
-    table = models.ManyToManyField(Card, through='RoomTableCard', related_name='+')
+    players = models.ManyToManyField(User, through='Membership', related_name='+')
+    deck = models.ManyToManyField(Card, through='CardInDeck', related_name='+')
+    blind = models.IntegerField(default=10)
     ante = models.IntegerField(default=0)
     bank = models.IntegerField(default=0)
     turn_timeout = models.IntegerField(default=30)
     
     class RoomStatuses(models.TextChoices):
-        WAIT = 'wt', _('waiting for players')
-        PREFLOP = 'pf', _('preflop')
-        FLOP = 'fp', _('flop')
-        TURN = 'tn', _('turn')
-        RIVER = 'rv', _('river')
-        IDLE = 'no', _('idle')
+        WAITING = 'w', _('waiting for players')
+        READY = 'r', _('ready')
+        UNDER_CONTROL = 'c', _('under control')
+        ENDED = 'e', _('ended')
 
     status = models.CharField(
-        max_length=2,
+        max_length=1,
         choices=RoomStatuses.choices,
-        default=RoomStatuses.IDLE,
+        default=RoomStatuses.WAITING,
     )
 
 
-class RoomMembership(models.Model):
+class Membership(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_ready = models.BooleanField(default=False)
-    bank = models.IntegerField(default=0)
+    bank = models.IntegerField(default=100)
     raise_value = models.IntegerField(default=0)
+    hand = models.ManyToManyField(Card, related_name='+', null=True, blank=True)
     
     class RoomMemberActions(models.TextChoices):
-        BET = 'bet', _('bet')
-        CALL = 'call', _('call')
-        RAISE = 'raise', _('raise')
-        CHECK = 'check', _('check')
-        FOLD = 'fold', _('fold')
+        BET = 'b', _('bet')
+        CALL = 'c', _('call')
+        RAISE = 'r', _('raise')
+        CHECK = 'h', _('check')
+        FOLD = 'f', _('fold')
 
     action = models.CharField(
-        max_length=5,
+        max_length=1,
         choices=RoomMemberActions.choices,
         default=RoomMemberActions.FOLD,
     )
-    turn_started = models.DateTimeField(null=True)
-    acted_last = models.DateTimeField(null=True)
-
-    class RoomMemberRoles(models.TextChoices):
-        S_BLIND = 's', _('small blind')
-        B_BLIND = 'b', _('big blind')
-        DEFAULT = 'd', _('default')
-
-    role = models.CharField(
-        max_length=1,
-        choices=RoomMemberRoles.choices,
-        default=RoomMemberRoles.DEFAULT,
-    )
+    turn_started = models.DateTimeField(null=True, blank=True)
+    acted_last = models.DateTimeField(null=True, blank=True)
 
 
-class RoomTableCard(models.Model):
+class CardInDeck(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    index = models.IntegerField(default=0)
+    position = models.IntegerField(default=0)

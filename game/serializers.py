@@ -2,12 +2,16 @@ from rest_framework import serializers
 
 from . import models
 
-class RoomSerializer(serializers.HyperlinkedModelSerializer):
+
+class MembershipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Membership
+        fields = ['player', 'room', 'is_ready', 'hand', 'bank', 'action', 'raise_value', 'turn_started', 'acted_last']
+
+
+class RoomSerializer(serializers.ModelSerializer):
+    players = MembershipSerializer(required=False, many=True, read_only=True)
+
     class Meta:
         model = models.Room
-        fields = ['name', 'players', 'deck', 'table', 'status', 'bank', 'ante']
-
-class RoomMembershipSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.RoomMembership
-        fields = ['player', 'room', 'is_ready', 'hand', 'bank', 'role', 'action', 'raise_value']
+        fields = ['name', 'players', 'table', 'status', 'bank', 'ante', 'turn_timeout']
