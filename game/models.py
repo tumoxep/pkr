@@ -1,74 +1,46 @@
+from turtle import position
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.db import models
 
+score_to_value = {
+    10: 'Jack',
+    11: 'Queen',
+    12: 'King',
+    13: 'ace',
+}
 
 class Card(models.Model):
-    class Cards(models.TextChoices):
-        cC2 = 'C2', _('2 of clubs')
-        cC3 = 'C3', _('3 of clubs')
-        cC4 = 'C4', _('4 of clubs')
-        cC5 = 'C5', _('5 of clubs')
-        cC6 = 'C6', _('6 of clubs')
-        cC7 = 'C7', _('7 of clubs')
-        cC8 = 'C8', _('8 of clubs')
-        cC9 = 'C9', _('9 of clubs')
-        cCX = 'CX', _('10 of clubs')
-        cCJ = 'CJ', _('J of clubs')
-        cCQ = 'CQ', _('Q of clubs')
-        cCK = 'CK', _('K of clubs')
-        cCA = 'CA', _('A of clubs')
-        cD2 = 'D2', _('2 of diamonds')
-        cD3 = 'D3', _('3 of diamonds')
-        cD4 = 'D4', _('4 of diamonds')
-        cD5 = 'D5', _('5 of diamonds')
-        cD6 = 'D6', _('6 of diamonds')
-        cD7 = 'D7', _('7 of diamonds')
-        cD8 = 'D8', _('8 of diamonds')
-        cD9 = 'D9', _('9 of diamonds')
-        cDX = 'DX', _('10 of diamonds')
-        cDJ = 'DJ', _('J of diamonds')
-        cDQ = 'DQ', _('Q of diamonds')
-        cDK = 'DK', _('K of diamonds')
-        cDA = 'DA', _('A of diamonds')
-        cH2 = 'H2', _('2 of hearts')
-        cH3 = 'H3', _('3 of hearts')
-        cH4 = 'H4', _('4 of hearts')
-        cH5 = 'H5', _('5 of hearts')
-        cH6 = 'H6', _('6 of hearts')
-        cH7 = 'H7', _('7 of hearts')
-        cH8 = 'H8', _('8 of hearts')
-        cH9 = 'H9', _('9 of hearts')
-        cHX = 'HX', _('10 of hearts')
-        cHJ = 'HJ', _('J of hearts')
-        cHQ = 'HQ', _('Q of hearts')
-        cHK = 'HK', _('K of hearts')
-        cHA = 'HA', _('A of hearts')
-        cS2 = 'S2', _('2 of spades')
-        cS3 = 'S3', _('3 of spades')
-        cS4 = 'S4', _('4 of spades')
-        cS5 = 'S5', _('5 of spades')
-        cS6 = 'S6', _('6 of spades')
-        cS7 = 'S7', _('7 of spades')
-        cS8 = 'S8', _('8 of spades')
-        cS9 = 'S9', _('9 of spades')
-        cSX = 'SX', _('10 of spades')
-        cSH = 'SH', _('J of shearts')
-        cSQ = 'SQ', _('Q of spades')
-        cSK = 'SK', _('K of spades')
-        cSA = 'SA', _('A of spades')
+    class Suits(models.TextChoices):
+        CLUBS = 'c', _('♣')
+        DIAMONDS = 'd', _('♦')
+        HEARTS = 'h', _('♥')
+        SPADES = 's', _('♠')
 
-    value = models.CharField(max_length=2, choices=Cards.choices)
+    score = models.IntegerField()
+    suit = models.CharField(
+        max_length=1,
+        choices=Suits.choices,
+    )
+
+    def __str__(self):
+        value = self.score + 1
+        if self.score > 9:
+            value = score_to_value[self.score]
+        return "{}{}".format(value, self.get_suit_display())
 
 
 class Room(models.Model):
     name = models.CharField(max_length=200, default='')
     players = models.ManyToManyField(User, through='Membership', related_name='+')
     deck = models.ManyToManyField(Card, through='CardInDeck', related_name='+')
+    table = models.ManyToManyField(Card, related_name='+', null=True, blank=True)
     blind = models.IntegerField(default=10)
     ante = models.IntegerField(default=0)
     bank = models.IntegerField(default=0)
-    turn_timeout = models.IntegerField(default=30)
+    next_turn = models.DateTimeField(null=True, blank=True)
+    bet = models.IntegerField(default=0)
+    timeout = models.IntegerField(default=30)
     
     class RoomStatuses(models.TextChoices):
         WAITING = 'w', _('waiting for players')
@@ -88,23 +60,22 @@ class Membership(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_ready = models.BooleanField(default=False)
     bank = models.IntegerField(default=100)
-    raise_value = models.IntegerField(default=0)
+    bet = models.IntegerField(default=0)
     hand = models.ManyToManyField(Card, related_name='+', null=True, blank=True)
+    position = models.IntegerField(default=0)
     
-    class RoomMemberActions(models.TextChoices):
-        BET = 'b', _('bet')
-        CALL = 'c', _('call')
+    class MemberActions(models.TextChoices):
         RAISE = 'r', _('raise')
-        CHECK = 'h', _('check')
+        CHECK = 'c', _('check')
         FOLD = 'f', _('fold')
+        SKIP = 's', _('skp')
+        NO_ACTION = '', _('no action')
 
     action = models.CharField(
         max_length=1,
-        choices=RoomMemberActions.choices,
-        default=RoomMemberActions.FOLD,
+        choices=MemberActions.choices,
+        default=MemberActions.FOLD,
     )
-    turn_started = models.DateTimeField(null=True, blank=True)
-    acted_last = models.DateTimeField(null=True, blank=True)
 
 
 class CardInDeck(models.Model):
